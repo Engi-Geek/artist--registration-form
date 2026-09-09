@@ -49,7 +49,7 @@ A modern, responsive, and bilingual web application built with **React + Vite** 
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/Engi-Geek/artist-registration-form.git
+git clone https://github.com/Engi-Geek/artist--registration-form.git
 
 # Navigate into project directory
 cd artist-registration-form
