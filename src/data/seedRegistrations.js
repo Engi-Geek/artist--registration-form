@@ -289,14 +289,14 @@ export const SEED_REGISTRATIONS = [
     },
     artDetails: {
       category: "shastriya",
-      discipline: "hastshilp",
-      artDescription: "पारंपरिक ओडिशा पट्टचित्र एवं ताड़पत्र नक्काशी के विशेषज्ञ शिल्पी।",
+      discipline: "vadan",
+      artDescription: "पारंपरिक ओडिशा ओडिसी पखावज एवं मर्दल वादन विशेषज्ञ।",
       experience: "15 Years"
     },
     documents: {
       photoName: "kalinga_portrait.jpg",
       photoUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500&auto=format&fit=crop&q=80",
-      videoName: "pattachitra_creation.mp4",
+      videoName: "mandal_vadan_performance.mp4",
       videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4",
       panName: "pan_kalinga.jpg",
       panUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
@@ -309,9 +309,9 @@ export const SEED_REGISTRATIONS = [
     },
     socialLinks: {
       youtube: "",
-      instagram: "https://instagram.com/raghurajpur_pattachitra",
-      facebook: "https://facebook.com/odishaheritagecrafts",
-      portfolio: "https://pattachitra-raghurajpur.org"
+      instagram: "https://instagram.com/raghurajpur_heritage",
+      facebook: "https://facebook.com/odishaheritagemusic",
+      portfolio: ""
     }
   },
   {
@@ -326,7 +326,7 @@ export const SEED_REGISTRATIONS = [
       dob: "1985-05-18",
       gender: "Female",
       mobile: "9771029485",
-      email: "shanti.madhubani@example.com",
+      email: "shanti.mithila@example.com",
       address: "Village Ranti, Post Madhubani",
       district: "Madhubani",
       state: "Bihar",
@@ -334,14 +334,14 @@ export const SEED_REGISTRATIONS = [
     },
     artDetails: {
       category: "janjatiya",
-      discipline: "hastshilp",
-      artDescription: "मिथिला मधुबनी चित्रकला के कोहबर एवं अरिपन रूपांकन विशेषज्ञ।",
+      discipline: "gayan",
+      artDescription: "पारंपरिक मैथिली सोहर, कजरी एवं झूमर लोकगीत गायन कलाकार।",
       experience: "20 Years"
     },
     documents: {
       photoName: "shanti_devi.jpg",
       photoUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&auto=format&fit=crop&q=80",
-      videoName: "madhubani_live_painting.mp4",
+      videoName: "mithila_folk_singing.mp4",
       videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
       panName: "pan_shanti.jpg",
       panUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
@@ -354,7 +354,7 @@ export const SEED_REGISTRATIONS = [
     },
     socialLinks: {
       youtube: "",
-      instagram: "https://instagram.com/mithila_heritage_art",
+      instagram: "https://instagram.com/mithila_heritage_music",
       facebook: "https://facebook.com/shantidevimadhubani",
       portfolio: ""
     }
@@ -416,7 +416,7 @@ export const SEED_REGISTRATIONS = [
       dob: "1992-08-14",
       gender: "Male",
       mobile: "9811023456",
-      email: "kabir.theatre@example.com",
+      email: "kabir.dance@example.com",
       address: "Mandi House Cultural Hub",
       district: "Central Delhi",
       state: "Delhi (NCT)",
@@ -424,8 +424,8 @@ export const SEED_REGISTRATIONS = [
     },
     artDetails: {
       category: "samakalin",
-      discipline: "natak",
-      artDescription: "समकालीन सामाजिक विषयों पर नुक्कड़ नाटक एवं रंगमंच निर्देशक।",
+      discipline: "nritya",
+      artDescription: "समकालीन शास्त्रीय एवं आधुनिक भारतीय फ्यूजन नृत्य निर्देशक।",
       experience: "9 Years"
     },
     documents: {

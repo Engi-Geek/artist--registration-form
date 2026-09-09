@@ -47,8 +47,5 @@ export const ART_CATEGORIES = [
 export const ART_DISCIPLINES = [
   { id: "gayan", nameHi: "गायन (Vocal / Singing)", nameEn: "Vocal / Singing", examples: "लोकगीत, भजन, सूफी, ख्याल, ध्रुपद" },
   { id: "vadan", nameHi: "वादन (Instrumental)", nameEn: "Instrumental", examples: "ढोलक, तबला, सितार, सारंगी, बांसुरी, शहनाई" },
-  { id: "nritya", nameHi: "नृत्य (Dance)", nameEn: "Dance", examples: "कालबेलिया, घूमर, बिहू, छऊ, गरबा, कथक, भरतनाट्यम" },
-  { id: "natak", nameHi: "नाटक / रंगमंच (Theatre / Drama)", nameEn: "Theatre / Drama", examples: "नुक्कड़ नाटक, स्वांग, नौटंकी, यक्षगान" },
-  { id: "hastshilp", nameHi: "हस्तशिल्प / चित्रकला (Painting & Crafts)", nameEn: "Crafts & Painting", examples: "मधुबनी, वरली, गोंड पेंटिंग, टेराकोटा" },
-  { id: "other", nameHi: "अन्य कला विधा (Other Art Forms)", nameEn: "Other Art Forms", examples: "कठपुतली, जादू, लोक कथा वाचन" }
+  { id: "nritya", nameHi: "नृत्य (Dance)", nameEn: "Dance", examples: "कालबेलिया, घूमर, बिहू, छऊ, गरबा, कथक, भरतनाट्यम" }
 ];
