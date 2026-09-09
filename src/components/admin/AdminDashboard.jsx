@@ -19,7 +19,13 @@ import {
   Table as TableIcon,
   Film,
   Music,
-  Award
+  Award,
+  KeyRound,
+  Lock,
+  CheckCircle2,
+  AlertCircle,
+  X,
+  Check
 } from 'lucide-react';
 import { SEED_REGISTRATIONS } from '../../data/seedRegistrations';
 import { INDIAN_STATES, ART_CATEGORIES, ART_DISCIPLINES } from '../../data/indianStates';
@@ -34,6 +40,14 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [selectedEntry, setSelectedEntry] = useState(null);
   const [viewMode, setViewMode] = useState('table'); // 'table' | 'gallery'
+
+  // Change Password state inside Dashboard
+  const [showChangePassModal, setShowChangePassModal] = useState(false);
+  const [currPass, setCurrPass] = useState('');
+  const [newPass, setNewPass] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
+  const [passError, setPassError] = useState('');
+  const [passSuccess, setPassSuccess] = useState('');
 
   // Load from localStorage + Seed data
   const loadRegistrations = () => {
@@ -158,6 +172,43 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
     link.remove();
   };
 
+  // Handle Change Password inside Dashboard
+  const handleChangePassInDashboard = (e) => {
+    e.preventDefault();
+    setPassError('');
+    setPassSuccess('');
+
+    const storedPass = localStorage.getItem('admin_custom_password') || 'admin@2026';
+
+    if (!currPass.trim()) {
+      setPassError('वर्तमान पासवर्ड अनिवार्य है।');
+      return;
+    }
+    if (currPass !== storedPass) {
+      setPassError('वर्तमान पासवर्ड गलत है!');
+      return;
+    }
+    if (!newPass.trim() || newPass.length < 6) {
+      setPassError('नया पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।');
+      return;
+    }
+    if (newPass !== confirmPass) {
+      setPassError('नया पासवर्ड और पुष्टि पासवर्ड मेल नहीं खा रहे हैं।');
+      return;
+    }
+
+    localStorage.setItem('admin_custom_password', newPass);
+    setPassSuccess('✅ पासवर्ड सफलतापूर्वक अपडेट कर दिया गया है!');
+    setTimeout(() => {
+      setShowChangePassModal(false);
+      setCurrPass('');
+      setNewPass('');
+      setConfirmPass('');
+      setPassSuccess('');
+      setPassError('');
+    }, 1500);
+  };
+
   return (
     <div className="app-container" style={{ maxWidth: '1240px' }}>
       {/* Admin Header */}
@@ -199,6 +250,16 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
           </div>
 
           <div className="header-actions">
+            <button
+              type="button"
+              className="btn btn-secondary"
+              style={{ fontSize: '0.85rem', padding: '8px 14px' }}
+              onClick={() => setShowChangePassModal(true)}
+            >
+              <KeyRound size={15} color="var(--secondary)" />
+              <span>पासवर्ड बदलें (Change Pass)</span>
+            </button>
+
             <button
               type="button"
               className="btn btn-secondary"
@@ -735,6 +796,132 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
           onClose={() => setSelectedEntry(null)}
           onUpdateStatus={handleUpdateStatus}
         />
+      )}
+
+      {/* Change Password Modal */}
+      {showChangePassModal && (
+        <div className="modal-backdrop">
+          <div className="modal-content" style={{ maxWidth: '440px' }}>
+            <div className="modal-header">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <KeyRound size={20} color="var(--secondary)" />
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 800 }}>पासवर्ड बदलें (Change Password)</h3>
+              </div>
+              <button
+                type="button"
+                className="btn-remove-file"
+                onClick={() => {
+                  setShowChangePassModal(false);
+                  setPassError('');
+                  setPassSuccess('');
+                }}
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            <div className="modal-body">
+              {passSuccess && (
+                <div className="name-match-card matched" style={{ marginBottom: '14px', padding: '10px 14px', fontSize: '0.84rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <CheckCircle2 size={16} />
+                    <span>{passSuccess}</span>
+                  </div>
+                </div>
+              )}
+
+              {passError && (
+                <div className="name-match-card mismatch" style={{ marginBottom: '14px', padding: '10px 14px', fontSize: '0.84rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <AlertCircle size={16} />
+                    <span>{passError}</span>
+                  </div>
+                </div>
+              )}
+
+              <form onSubmit={handleChangePassInDashboard}>
+                <div className="form-group" style={{ marginBottom: '12px' }}>
+                  <label className="form-label" htmlFor="curr-pass-dash">
+                    <span className="label-text-hi">वर्तमान पासवर्ड (Current Password)</span>
+                  </label>
+                  <div className="input-container">
+                    <span className="input-icon-left">
+                      <Lock size={16} />
+                    </span>
+                    <input
+                      id="curr-pass-dash"
+                      type="password"
+                      className="form-input input-with-icon-left"
+                      placeholder="वर्तमान पासवर्ड"
+                      value={currPass}
+                      onChange={(e) => setCurrPass(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group" style={{ marginBottom: '12px' }}>
+                  <label className="form-label" htmlFor="new-pass-dash">
+                    <span className="label-text-hi">नया पासवर्ड (New Password)</span>
+                  </label>
+                  <div className="input-container">
+                    <span className="input-icon-left">
+                      <KeyRound size={16} />
+                    </span>
+                    <input
+                      id="new-pass-dash"
+                      type="password"
+                      className="form-input input-with-icon-left"
+                      placeholder="नया पासवर्ड (min 6 chars)"
+                      value={newPass}
+                      onChange={(e) => setNewPass(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group" style={{ marginBottom: '20px' }}>
+                  <label className="form-label" htmlFor="confirm-pass-dash">
+                    <span className="label-text-hi">पुष्टि करें (Confirm Password)</span>
+                  </label>
+                  <div className="input-container">
+                    <span className="input-icon-left">
+                      <Check size={16} />
+                    </span>
+                    <input
+                      id="confirm-pass-dash"
+                      type="password"
+                      className="form-input input-with-icon-left"
+                      placeholder="नया पासवर्ड पुनः दर्ज करें"
+                      value={confirmPass}
+                      onChange={(e) => setConfirmPass(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    style={{ flex: 1 }}
+                    onClick={() => {
+                      setShowChangePassModal(false);
+                      setPassError('');
+                      setPassSuccess('');
+                    }}
+                  >
+                    रद्द करें
+                  </button>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    style={{ flex: 1.5, background: 'var(--secondary)' }}
+                  >
+                    अपडेट करें (Save)
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
