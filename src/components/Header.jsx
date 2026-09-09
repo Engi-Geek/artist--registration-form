@@ -30,7 +30,6 @@ export const Header = ({ onFillSampleData, onResetForm, onOpenAdmin }) => {
                 <ShieldCheck size={14} /> आधिकारिक पोर्टल / Portal 2026
               </span>
             </h1>
-            <p>National Folk & Tribal Artist Registration & Database Portal (React + Vite)</p>
           </div>
         </div>
 
