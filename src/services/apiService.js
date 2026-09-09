@@ -1,7 +1,12 @@
-/**
- * API Service for Artist Registration Form
- * Formatted to mimic standard REST API endpoint with FormData and JSON payload
- */
+// Helper to convert File to Data URL or Object URL for local admin inspection
+const fileToPreviewUrl = (file) => {
+  if (!file) return null;
+  try {
+    return URL.createObjectURL(file);
+  } catch (e) {
+    return null;
+  }
+};
 
 export const submitArtistRegistration = async (formDataState, onProgress = () => {}) => {
   // Simulate network request progress
@@ -28,7 +33,7 @@ export const submitArtistRegistration = async (formDataState, onProgress = () =>
   const receiptData = {
     registrationId,
     submissionTime,
-    status: "SUBMITTED_FOR_VERIFICATION",
+    status: "UNDER_REVIEW",
     statusTextHi: "सत्यापन हेतु प्रस्तुत (Submitted for Verification)",
     statusTextEn: "Under Review by Directorate of Culture",
     applicant: {
@@ -51,11 +56,17 @@ export const submitArtistRegistration = async (formDataState, onProgress = () =>
     },
     documents: {
       photoName: formDataState.files.photo ? formDataState.files.photo.name : "N/A",
+      photoUrl: fileToPreviewUrl(formDataState.files.photo) || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80",
       videoName: formDataState.files.video ? formDataState.files.video.name : "N/A",
+      videoUrl: fileToPreviewUrl(formDataState.files.video) || "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
       panName: formDataState.files.pan ? formDataState.files.pan.name : "N/A",
+      panUrl: fileToPreviewUrl(formDataState.files.pan) || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
       aadhaarFrontName: formDataState.files.aadhaarFront ? formDataState.files.aadhaarFront.name : "N/A",
+      aadhaarFrontUrl: fileToPreviewUrl(formDataState.files.aadhaarFront) || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
       aadhaarBackName: formDataState.files.aadhaarBack ? formDataState.files.aadhaarBack.name : "N/A",
-      passbookName: formDataState.files.passbook ? formDataState.files.passbook.name : "N/A"
+      aadhaarBackUrl: fileToPreviewUrl(formDataState.files.aadhaarBack) || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
+      passbookName: formDataState.files.passbook ? formDataState.files.passbook.name : "N/A",
+      passbookUrl: fileToPreviewUrl(formDataState.files.passbook) || "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=500&auto=format&fit=crop&q=80"
     },
     socialLinks: {
       youtube: formDataState.youtube || "",
@@ -69,7 +80,7 @@ export const submitArtistRegistration = async (formDataState, onProgress = () =>
   try {
     const existing = JSON.parse(localStorage.getItem("artist_registrations") || "[]");
     existing.unshift(receiptData);
-    localStorage.setItem("artist_registrations", JSON.stringify(existing.slice(0, 20)));
+    localStorage.setItem("artist_registrations", JSON.stringify(existing.slice(0, 30)));
   } catch (err) {
     console.warn("LocalStorage save error:", err);
   }

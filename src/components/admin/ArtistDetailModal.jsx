@@ -1,8 +1,31 @@
-import React from 'react';
-import { X, CheckCircle, AlertTriangle, Printer, Download, User, Palette, FileText, Phone, Mail, MapPin, ShieldCheck, Share2 } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  X,
+  CheckCircle,
+  AlertTriangle,
+  Printer,
+  Download,
+  User,
+  Palette,
+  FileText,
+  Phone,
+  Mail,
+  MapPin,
+  ShieldCheck,
+  Share2,
+  Film,
+  Image as ImageIcon,
+  CreditCard,
+  Building2,
+  ExternalLink,
+  ZoomIn
+} from 'lucide-react';
 import { ART_CATEGORIES, ART_DISCIPLINES } from '../../data/indianStates';
 
 export const ArtistDetailModal = ({ entry, onClose, onUpdateStatus }) => {
+  const [activeTab, setActiveTab] = useState('all'); // 'all' | 'media' | 'documents'
+  const [selectedZoomImage, setSelectedZoomImage] = useState(null);
+
   if (!entry) return null;
 
   const { registrationId, applicant, artDetails, documents, socialLinks, status, submissionTime } = entry;
@@ -23,31 +46,37 @@ export const ArtistDetailModal = ({ entry, onClose, onUpdateStatus }) => {
     window.print();
   };
 
+  // Fallback visual representations if no image URL
+  const photoSrc = documents?.photoUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80";
+  const videoSrc = documents?.videoUrl || "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4";
+  const panSrc = documents?.panUrl || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80";
+  const aadhaarFSrc = documents?.aadhaarFrontUrl || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80";
+  const aadhaarBSrc = documents?.aadhaarBackUrl || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80";
+  const passbookSrc = documents?.passbookUrl || "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=500&auto=format&fit=crop&q=80";
+
   return (
     <div className="modal-backdrop">
-      <div className="modal-content" style={{ maxWidth: '850px' }}>
+      <div className="modal-content" style={{ maxWidth: '940px' }}>
         <div className="modal-header">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <img
+              src={photoSrc}
+              alt={applicant?.fullName}
               style={{
-                width: '42px',
-                height: '42px',
-                borderRadius: 'var(--radius-md)',
-                background: 'linear-gradient(135deg, #4f46e5 0%, #3730a3 100%)',
-                color: 'white',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
+                width: '48px',
+                height: '48px',
+                borderRadius: 'var(--radius-full)',
+                objectFit: 'cover',
+                border: '2px solid var(--primary)',
+                boxShadow: 'var(--shadow-sm)'
               }}
-            >
-              <User size={22} />
-            </div>
+            />
             <div>
-              <h2 style={{ fontSize: '1.2rem', fontWeight: 800 }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 800 }}>
                 {applicant?.fullName}
               </h2>
-              <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                आवेदन संख्या: <strong>{registrationId}</strong> • {formattedDate}
+              <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                आवेदन संख्या: <strong style={{ color: 'var(--primary)' }}>{registrationId}</strong> • {formattedDate}
               </div>
             </div>
           </div>
@@ -98,7 +127,7 @@ export const ArtistDetailModal = ({ entry, onClose, onUpdateStatus }) => {
                 <ShieldCheck size={20} color="var(--warning)" />
               )}
               <span style={{ fontWeight: 700, fontSize: '0.9rem' }}>
-                वर्तमान स्थिति:{' '}
+                सत्यापन स्थिति:{' '}
                 {status === 'APPROVED'
                   ? 'स्वीकृत (Approved)'
                   : status === 'REJECTED'
@@ -113,7 +142,7 @@ export const ArtistDetailModal = ({ entry, onClose, onUpdateStatus }) => {
                 className="btn btn-primary"
                 style={{
                   padding: '6px 14px',
-                  fontSize: '0.8rem',
+                  fontSize: '0.82rem',
                   background: 'var(--success)',
                   boxShadow: 'none'
                 }}
@@ -126,7 +155,7 @@ export const ArtistDetailModal = ({ entry, onClose, onUpdateStatus }) => {
                 className="btn btn-secondary"
                 style={{
                   padding: '6px 14px',
-                  fontSize: '0.8rem',
+                  fontSize: '0.82rem',
                   color: 'var(--danger)',
                   borderColor: 'var(--danger-border)'
                 }}
@@ -134,6 +163,217 @@ export const ArtistDetailModal = ({ entry, onClose, onUpdateStatus }) => {
               >
                 अस्वीकृत करें (Reject)
               </button>
+            </div>
+          </div>
+
+          {/* Video & Performance Highlight Player */}
+          <div
+            style={{
+              background: '#0f172a',
+              borderRadius: 'var(--radius-lg)',
+              padding: '18px',
+              marginBottom: '26px',
+              color: 'white',
+              boxShadow: 'var(--shadow-lg)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Film size={20} color="var(--primary)" />
+                <span style={{ fontWeight: 700, fontSize: '1rem' }}>
+                  कला प्रदर्शन वीडियो (Artist Performance Video)
+                </span>
+              </div>
+              <span style={{ fontSize: '0.75rem', background: 'rgba(255,255,255,0.15)', padding: '3px 10px', borderRadius: 'var(--radius-full)' }}>
+                {documents?.videoName || 'performance_clip.mp4'}
+              </span>
+            </div>
+
+            <video
+              src={videoSrc}
+              controls
+              style={{
+                width: '100%',
+                maxHeight: '340px',
+                borderRadius: 'var(--radius-md)',
+                backgroundColor: 'black'
+              }}
+            />
+          </div>
+
+          {/* Uploaded Photos & Documents Gallery */}
+          <div style={{ marginBottom: '28px' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                fontWeight: 700,
+                fontSize: '1.05rem',
+                marginBottom: '14px',
+                color: 'var(--text-main)'
+              }}
+            >
+              <ImageIcon size={18} color="var(--primary)" />
+              <span>अपलोड की गई फोटो व दस्तावेज (Uploaded Photos & Documents)</span>
+            </div>
+
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gap: '14px'
+              }}
+            >
+              {/* Photo Card */}
+              <div
+                style={{
+                  background: 'white',
+                  border: '1.5px solid var(--border-color)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: '10px',
+                  textAlign: 'center'
+                }}
+              >
+                <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '8px' }}>
+                  📷 आवेदक फोटो (Photo)
+                </div>
+                <img
+                  src={photoSrc}
+                  alt="Applicant Photo"
+                  style={{
+                    width: '100%',
+                    height: '140px',
+                    objectFit: 'cover',
+                    borderRadius: 'var(--radius-sm)',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => setSelectedZoomImage({ title: 'आवेदक फोटो (Applicant Photo)', src: photoSrc })}
+                />
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '6px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {documents?.photoName || 'photo.png'}
+                </div>
+              </div>
+
+              {/* PAN Card */}
+              <div
+                style={{
+                  background: 'white',
+                  border: '1.5px solid var(--border-color)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: '10px',
+                  textAlign: 'center'
+                }}
+              >
+                <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '8px' }}>
+                  📄 पैन कार्ड (PAN Card)
+                </div>
+                <img
+                  src={panSrc}
+                  alt="PAN Card"
+                  style={{
+                    width: '100%',
+                    height: '140px',
+                    objectFit: 'cover',
+                    borderRadius: 'var(--radius-sm)',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => setSelectedZoomImage({ title: 'पैन कार्ड (PAN Card)', src: panSrc })}
+                />
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '6px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {documents?.panName || 'pan_card.png'}
+                </div>
+              </div>
+
+              {/* Aadhaar Front */}
+              <div
+                style={{
+                  background: 'white',
+                  border: '1.5px solid var(--border-color)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: '10px',
+                  textAlign: 'center'
+                }}
+              >
+                <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '8px' }}>
+                  🆔 आधार सामने (Aadhaar Front)
+                </div>
+                <img
+                  src={aadhaarFSrc}
+                  alt="Aadhaar Front"
+                  style={{
+                    width: '100%',
+                    height: '140px',
+                    objectFit: 'cover',
+                    borderRadius: 'var(--radius-sm)',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => setSelectedZoomImage({ title: 'आधार कार्ड - सामने का भाग (Aadhaar Front)', src: aadhaarFSrc })}
+                />
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '6px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {documents?.aadhaarFrontName || 'aadhaar_front.png'}
+                </div>
+              </div>
+
+              {/* Aadhaar Back */}
+              <div
+                style={{
+                  background: 'white',
+                  border: '1.5px solid var(--border-color)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: '10px',
+                  textAlign: 'center'
+                }}
+              >
+                <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '8px' }}>
+                  🆔 आधार पीछे (Aadhaar Back)
+                </div>
+                <img
+                  src={aadhaarBSrc}
+                  alt="Aadhaar Back"
+                  style={{
+                    width: '100%',
+                    height: '140px',
+                    objectFit: 'cover',
+                    borderRadius: 'var(--radius-sm)',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => setSelectedZoomImage({ title: 'आधार कार्ड - पीछे का भाग (Aadhaar Back)', src: aadhaarBSrc })}
+                />
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '6px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {documents?.aadhaarBackName || 'aadhaar_back.png'}
+                </div>
+              </div>
+
+              {/* Passbook / Cheque */}
+              <div
+                style={{
+                  background: 'white',
+                  border: '1.5px solid var(--border-color)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: '10px',
+                  textAlign: 'center'
+                }}
+              >
+                <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '8px' }}>
+                  🏦 बैंक पासबुक (Passbook)
+                </div>
+                <img
+                  src={passbookSrc}
+                  alt="Passbook / Cheque"
+                  style={{
+                    width: '100%',
+                    height: '140px',
+                    objectFit: 'cover',
+                    borderRadius: 'var(--radius-sm)',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => setSelectedZoomImage({ title: 'बैंक पासबुक / चेक फोटो (Bank Passbook)', src: passbookSrc })}
+                />
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '6px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {documents?.passbookName || 'bank_passbook.png'}
+                </div>
+              </div>
             </div>
           </div>
 
@@ -203,51 +443,6 @@ export const ArtistDetailModal = ({ entry, onClose, onUpdateStatus }) => {
             </div>
           </div>
 
-          {/* Uploaded Documents List */}
-          <div
-            style={{
-              background: 'white',
-              border: '1px solid var(--border-color)',
-              borderRadius: 'var(--radius-md)',
-              padding: '16px',
-              marginBottom: '24px'
-            }}
-          >
-            <div
-              style={{
-                fontWeight: 700,
-                color: 'var(--text-main)',
-                marginBottom: '12px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px'
-              }}
-            >
-              <FileText size={16} color="var(--primary)" /> संलग्न दस्तावेज़ एवं मीडिया (Attached Files)
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '10px', fontSize: '0.82rem' }}>
-              <div style={{ background: 'var(--bg-card-subtle)', padding: '10px', borderRadius: 'var(--radius-sm)' }}>
-                <strong>📷 फोटो:</strong> {documents?.photoName || 'संलग्न'}
-              </div>
-              <div style={{ background: 'var(--bg-card-subtle)', padding: '10px', borderRadius: 'var(--radius-sm)' }}>
-                <strong>🎬 परफॉरमेंस वीडियो:</strong> {documents?.videoName || 'संलग्न'}
-              </div>
-              <div style={{ background: 'var(--bg-card-subtle)', padding: '10px', borderRadius: 'var(--radius-sm)' }}>
-                <strong>📄 पैन कार्ड:</strong> {documents?.panName || 'संलग्न'}
-              </div>
-              <div style={{ background: 'var(--bg-card-subtle)', padding: '10px', borderRadius: 'var(--radius-sm)' }}>
-                <strong>🆔 आधार (Front):</strong> {documents?.aadhaarFrontName || 'संलग्न'}
-              </div>
-              <div style={{ background: 'var(--bg-card-subtle)', padding: '10px', borderRadius: 'var(--radius-sm)' }}>
-                <strong>🆔 आधार (Back):</strong> {documents?.aadhaarBackName || 'संलग्न'}
-              </div>
-              <div style={{ background: 'var(--bg-card-subtle)', padding: '10px', borderRadius: 'var(--radius-sm)' }}>
-                <strong>🏦 बैंक पासबुक:</strong> {documents?.passbookName || 'संलग्न'}
-              </div>
-            </div>
-          </div>
-
           {/* Social Links if present */}
           {socialLinks && (socialLinks.youtube || socialLinks.instagram || socialLinks.facebook || socialLinks.portfolio) && (
             <div
@@ -263,7 +458,7 @@ export const ArtistDetailModal = ({ entry, onClose, onUpdateStatus }) => {
               <div style={{ fontWeight: 700, marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <Share2 size={16} /> सोशल मीडिया व पोर्टफोलियो लिंक्स
               </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px' }}>
                 {socialLinks.youtube && <div><strong>YouTube:</strong> <a href={socialLinks.youtube} target="_blank" rel="noreferrer">{socialLinks.youtube}</a></div>}
                 {socialLinks.instagram && <div><strong>Instagram:</strong> <a href={socialLinks.instagram} target="_blank" rel="noreferrer">{socialLinks.instagram}</a></div>}
                 {socialLinks.facebook && <div><strong>Facebook:</strong> <a href={socialLinks.facebook} target="_blank" rel="noreferrer">{socialLinks.facebook}</a></div>}
@@ -292,6 +487,49 @@ export const ArtistDetailModal = ({ entry, onClose, onUpdateStatus }) => {
           </div>
         </div>
       </div>
+
+      {/* Image Zoom Modal */}
+      {selectedZoomImage && (
+        <div
+          className="modal-backdrop"
+          style={{ zIndex: 11000 }}
+          onClick={() => setSelectedZoomImage(null)}
+        >
+          <div
+            style={{
+              background: 'white',
+              borderRadius: 'var(--radius-lg)',
+              padding: '16px',
+              maxWidth: '650px',
+              width: '90%',
+              boxShadow: 'var(--shadow-xl)',
+              textAlign: 'center'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+              <h4 style={{ fontSize: '1rem', fontWeight: 700 }}>{selectedZoomImage.title}</h4>
+              <button
+                type="button"
+                className="btn-remove-file"
+                onClick={() => setSelectedZoomImage(null)}
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <img
+              src={selectedZoomImage.src}
+              alt="Zoomed preview"
+              style={{
+                width: '100%',
+                maxHeight: '70vh',
+                objectFit: 'contain',
+                borderRadius: 'var(--radius-md)'
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
