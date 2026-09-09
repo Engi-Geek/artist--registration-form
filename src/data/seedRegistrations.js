@@ -90,6 +90,96 @@ export const SEED_REGISTRATIONS = [
     }
   },
   {
+    registrationId: "ART-2026-PUN-38190",
+    submissionTime: "2026-09-08T16:50:00.000Z",
+    status: "APPROVED",
+    statusTextHi: "स्वीकृत (Approved)",
+    statusTextEn: "Verified & Approved",
+    applicant: {
+      fullName: "Gurpreet Singh Dhillon",
+      fatherHusbandName: "Sardar Balwant Singh",
+      dob: "1991-07-22",
+      gender: "Male",
+      mobile: "9872013456",
+      email: "gurpreet.bhangra@example.com",
+      address: "VPO Jandiala Guru, Majha Region",
+      district: "Amritsar",
+      state: "Punjab",
+      pincode: "143115"
+    },
+    artDetails: {
+      category: "lok",
+      discipline: "nritya",
+      artDescription: "पारंपरिक पंजाबी भांगड़ा, झूमर एवं मालवई गिद्दा के प्रमुख नर्तक।",
+      experience: "13 Years"
+    },
+    documents: {
+      photoName: "gurpreet_photo.jpg",
+      photoUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=80",
+      videoName: "live_bhangra_performance.mp4",
+      videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      panName: "pan_gurpreet.jpg",
+      panUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
+      aadhaarFrontName: "aadhaar_gurpreet_f.jpg",
+      aadhaarFrontUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
+      aadhaarBackName: "aadhaar_gurpreet_b.jpg",
+      aadhaarBackUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
+      passbookName: "psb_passbook.jpg",
+      passbookUrl: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=500&auto=format&fit=crop&q=80"
+    },
+    socialLinks: {
+      youtube: "https://youtube.com/@gurpreet_bhangra_punjab",
+      instagram: "https://instagram.com/dhillon_bhangra_live",
+      facebook: "https://facebook.com/gurpreetbhangra",
+      portfolio: ""
+    }
+  },
+  {
+    registrationId: "ART-2026-TAM-64215",
+    submissionTime: "2026-09-08T18:20:00.000Z",
+    status: "APPROVED",
+    statusTextHi: "स्वीकृत (Approved)",
+    statusTextEn: "Verified & Approved",
+    applicant: {
+      fullName: "Meenakshi Sundaram Iyer",
+      fatherHusbandName: "K. S. Sundaram Iyer",
+      dob: "1995-02-14",
+      gender: "Female",
+      mobile: "9444018293",
+      email: "meenakshi.dance@example.com",
+      address: "No 18, Sannathi Street, Mylapore",
+      district: "Chennai",
+      state: "Tamil Nadu",
+      pincode: "600004"
+    },
+    artDetails: {
+      category: "shastriya",
+      discipline: "nritya",
+      artDescription: "तंजावुर शैली में शास्त्रीय भरतनाट्यम नृत्य की ख्यातिप्राप्त गुरु।",
+      experience: "17 Years"
+    },
+    documents: {
+      photoName: "meenakshi_portrait.jpg",
+      photoUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=80",
+      videoName: "varnam_bharatanatyam.mp4",
+      videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+      panName: "pan_meenakshi.jpg",
+      panUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
+      aadhaarFrontName: "aadhaar_meenakshi_f.jpg",
+      aadhaarFrontUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
+      aadhaarBackName: "aadhaar_meenakshi_b.jpg",
+      aadhaarBackUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
+      passbookName: "iob_passbook.jpg",
+      passbookUrl: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=500&auto=format&fit=crop&q=80"
+    },
+    socialLinks: {
+      youtube: "https://youtube.com/@meenakshi_bharatanatyam",
+      instagram: "https://instagram.com/meenakshi_dance_arts",
+      facebook: "",
+      portfolio: "https://meenakshisundaram.art"
+    }
+  },
+  {
     registrationId: "ART-2026-ASS-59218",
     submissionTime: "2026-09-09T08:45:00.000Z",
     status: "APPROVED",
@@ -115,7 +205,7 @@ export const SEED_REGISTRATIONS = [
     },
     documents: {
       photoName: "bhupen_avatar.png",
-      photoUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=80",
+      photoUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=80",
       videoName: "bihu_dhol_solo.mp4",
       videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
       panName: "pan_bhupen.jpg",
@@ -135,11 +225,56 @@ export const SEED_REGISTRATIONS = [
     }
   },
   {
-    registrationId: "ART-2026-ODI-73105",
-    submissionTime: "2026-09-09T11:20:00.000Z",
+    registrationId: "ART-2026-GUJ-51294",
+    submissionTime: "2026-09-09T09:30:00.000Z",
     status: "UNDER_REVIEW",
     statusTextHi: "सत्यापन हेतु लंबित (Under Review)",
     statusTextEn: "Under Verification",
+    applicant: {
+      fullName: "Dharmesh Bhai Patel",
+      fatherHusbandName: "Kanti Bhai Patel",
+      dob: "1989-10-08",
+      gender: "Male",
+      mobile: "9898024681",
+      email: "dharmesh.garba@example.com",
+      address: "Sardar Chowk, Navrangpura",
+      district: "Ahmedabad",
+      state: "Gujarat",
+      pincode: "380009"
+    },
+    artDetails: {
+      category: "lok",
+      discipline: "gayan",
+      artDescription: "पारंपरिक गुजराती गरबा, दोहा एवं डांडिया लोक संगीत गायक।",
+      experience: "15 Years"
+    },
+    documents: {
+      photoName: "dharmesh_photo.jpg",
+      photoUrl: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=500&auto=format&fit=crop&q=80",
+      videoName: "navratri_garba_live.mp4",
+      videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4",
+      panName: "pan_dharmesh.jpg",
+      panUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
+      aadhaarFrontName: "aadhaar_dharmesh_f.jpg",
+      aadhaarFrontUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
+      aadhaarBackName: "aadhaar_dharmesh_b.jpg",
+      aadhaarBackUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
+      passbookName: "bob_passbook.jpg",
+      passbookUrl: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=500&auto=format&fit=crop&q=80"
+    },
+    socialLinks: {
+      youtube: "https://youtube.com/@dharmesh_garba_official",
+      instagram: "https://instagram.com/dharmeshpatel_music",
+      facebook: "https://facebook.com/dharmeshgarba",
+      portfolio: ""
+    }
+  },
+  {
+    registrationId: "ART-2026-ODI-73105",
+    submissionTime: "2026-09-09T11:20:00.000Z",
+    status: "APPROVED",
+    statusTextHi: "स्वीकृत (Approved)",
+    statusTextEn: "Verified & Approved",
     applicant: {
       fullName: "Kalinga Charan Mahapatra",
       fatherHusbandName: "Dinabandhu Mahapatra",
@@ -160,7 +295,7 @@ export const SEED_REGISTRATIONS = [
     },
     documents: {
       photoName: "kalinga_portrait.jpg",
-      photoUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=80",
+      photoUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500&auto=format&fit=crop&q=80",
       videoName: "pattachitra_creation.mp4",
       videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4",
       panName: "pan_kalinga.jpg",
@@ -177,6 +312,51 @@ export const SEED_REGISTRATIONS = [
       instagram: "https://instagram.com/raghurajpur_pattachitra",
       facebook: "https://facebook.com/odishaheritagecrafts",
       portfolio: "https://pattachitra-raghurajpur.org"
+    }
+  },
+  {
+    registrationId: "ART-2026-BIH-82103",
+    submissionTime: "2026-09-09T12:05:00.000Z",
+    status: "UNDER_REVIEW",
+    statusTextHi: "सत्यापन हेतु लंबित (Under Review)",
+    statusTextEn: "Under Verification",
+    applicant: {
+      fullName: "Shanti Devi Jha",
+      fatherHusbandName: "Baidyanath Jha",
+      dob: "1985-05-18",
+      gender: "Female",
+      mobile: "9771029485",
+      email: "shanti.madhubani@example.com",
+      address: "Village Ranti, Post Madhubani",
+      district: "Madhubani",
+      state: "Bihar",
+      pincode: "847211"
+    },
+    artDetails: {
+      category: "janjatiya",
+      discipline: "hastshilp",
+      artDescription: "मिथिला मधुबनी चित्रकला के कोहबर एवं अरिपन रूपांकन विशेषज्ञ।",
+      experience: "20 Years"
+    },
+    documents: {
+      photoName: "shanti_devi.jpg",
+      photoUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&auto=format&fit=crop&q=80",
+      videoName: "madhubani_live_painting.mp4",
+      videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+      panName: "pan_shanti.jpg",
+      panUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
+      aadhaarFrontName: "aadhaar_shanti_f.jpg",
+      aadhaarFrontUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
+      aadhaarBackName: "aadhaar_shanti_b.jpg",
+      aadhaarBackUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=80",
+      passbookName: "ubi_passbook.jpg",
+      passbookUrl: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=500&auto=format&fit=crop&q=80"
+    },
+    socialLinks: {
+      youtube: "",
+      instagram: "https://instagram.com/mithila_heritage_art",
+      facebook: "https://facebook.com/shantidevimadhubani",
+      portfolio: ""
     }
   },
   {
@@ -205,7 +385,7 @@ export const SEED_REGISTRATIONS = [
     },
     documents: {
       photoName: "anuradha_kathak.jpg",
-      photoUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=80",
+      photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80",
       videoName: "kathak_tatkar_tarana.mp4",
       videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
       panName: "pan_anuradha.jpg",

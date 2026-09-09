@@ -209,6 +209,13 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
     }, 1500);
   };
 
+  // Reload and overwrite localStorage with clean seed data
+  const handleReloadAllSeedData = () => {
+    localStorage.setItem('artist_registrations', JSON.stringify(SEED_REGISTRATIONS));
+    setRegistrations(SEED_REGISTRATIONS);
+    alert('✅ सभी डमी कलाकार, वीडियो और फोटो डेटा सफलतापूर्वक लोड कर दिए गए हैं!');
+  };
+
   return (
     <div className="app-container" style={{ maxWidth: '1240px' }}>
       {/* Admin Header */}
@@ -252,12 +259,23 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
           <div className="header-actions">
             <button
               type="button"
+              className="btn-demo"
+              style={{ background: 'var(--primary-light)', color: 'var(--primary)', borderColor: 'var(--primary)' }}
+              onClick={handleReloadAllSeedData}
+              title="सभी 10+ डमी कलाकार, वीडियो और फोटो लोड करें"
+            >
+              <Sparkles size={15} />
+              <span>डमी डेटा रीलोड (Seed Data)</span>
+            </button>
+
+            <button
+              type="button"
               className="btn btn-secondary"
               style={{ fontSize: '0.85rem', padding: '8px 14px' }}
               onClick={() => setShowChangePassModal(true)}
             >
               <KeyRound size={15} color="var(--secondary)" />
-              <span>पासवर्ड बदलें (Change Pass)</span>
+              <span>पासवर्ड बदलें</span>
             </button>
 
             <button
@@ -267,7 +285,7 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
               onClick={onBackToForm}
             >
               <ArrowLeft size={16} />
-              <span>पंजीकरण फॉर्म (Artist Form)</span>
+              <span>पंजीकरण फॉर्म</span>
             </button>
 
             <button
@@ -282,7 +300,7 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
               onClick={onLogout}
             >
               <LogOut size={16} />
-              <span>लॉगआउट (Logout)</span>
+              <span>लॉगआउट</span>
             </button>
           </div>
         </div>

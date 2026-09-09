@@ -48,5 +48,80 @@ export const DUMMY_PROFILES = [
       facebook: "",
       portfolio: ""
     }
+  },
+  {
+    label: "सरदार गुरप्रीत सिंह (भांगड़ा लोक नर्तक - पंजाब)",
+    data: {
+      fullName: "Gurpreet Singh Dhillon",
+      fatherHusbandName: "Sardar Balwant Singh",
+      dob: "1991-07-22",
+      gender: "Male",
+      mobile: "9872013456",
+      email: "gurpreet.bhangra@example.com",
+      address: "VPO Jandiala Guru, Majha Region",
+      district: "Amritsar",
+      state: "Punjab",
+      pincode: "143115",
+      category: "lok",
+      discipline: "nritya",
+      artDescription: "पारंपरिक पंजाबी भांगड़ा, झूमर एवं मालवई गिद्दा के प्रमुख नर्तक।",
+      experience: "13",
+      aadhaarName: "Gurpreet Singh Dhillon",
+      passbookName: "Gurpreet Singh Dhillon",
+      youtube: "https://youtube.com/@gurpreet_bhangra_punjab",
+      instagram: "https://instagram.com/dhillon_bhangra_live",
+      facebook: "https://facebook.com/gurpreetbhangra",
+      portfolio: ""
+    }
+  },
+  {
+    label: "श्रीमती मीनाक्षी सुंदरम (भरतनाट्यम नृत्यांगना - तमिलनाडु)",
+    data: {
+      fullName: "Meenakshi Sundaram Iyer",
+      fatherHusbandName: "K. S. Sundaram Iyer",
+      dob: "1995-02-14",
+      gender: "Female",
+      mobile: "9444018293",
+      email: "meenakshi.dance@example.com",
+      address: "No 18, Sannathi Street, Mylapore",
+      district: "Chennai",
+      state: "Tamil Nadu",
+      pincode: "600004",
+      category: "shastriya",
+      discipline: "nritya",
+      artDescription: "तंजावुर शैली में शास्त्रीय भरतनाट्यम नृत्य की ख्यातिप्राप्त गुरु।",
+      experience: "17",
+      aadhaarName: "Meenakshi Sundaram Iyer",
+      passbookName: "Meenakshi Sundaram Iyer",
+      youtube: "https://youtube.com/@meenakshi_bharatanatyam",
+      instagram: "https://instagram.com/meenakshi_dance_arts",
+      facebook: "",
+      portfolio: "https://meenakshisundaram.art"
+    }
+  },
+  {
+    label: "श्रीमती शांति देवी झा (मधुबनी चित्रकार - बिहार)",
+    data: {
+      fullName: "Shanti Devi Jha",
+      fatherHusbandName: "Baidyanath Jha",
+      dob: "1985-05-18",
+      gender: "Female",
+      mobile: "9771029485",
+      email: "shanti.madhubani@example.com",
+      address: "Village Ranti, Post Madhubani",
+      district: "Madhubani",
+      state: "Bihar",
+      pincode: "847211",
+      category: "janjatiya",
+      discipline: "hastshilp",
+      artDescription: "मिथिला मधुबनी चित्रकला के कोहबर एवं अरिपन रूपांकन विशेषज्ञ।",
+      experience: "20",
+      aadhaarName: "Shanti Devi Jha",
+      passbookName: "Shanti Devi Jha",
+      youtube: "",
+      instagram: "https://instagram.com/mithila_heritage_art",
+      facebook: "https://facebook.com/shantidevimadhubani",
+      portfolio: ""
+    }
   }
 ];
