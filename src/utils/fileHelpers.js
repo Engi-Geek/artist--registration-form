@@ -101,5 +101,12 @@ export const validateFile = (file, ruleKey) => {
 
 export const createPreviewUrl = (file) => {
   if (!file) return null;
-  return URL.createObjectURL(file);
+  if (typeof file === 'string') return file;
+  try {
+    return URL.createObjectURL(file);
+  } catch (e) {
+    console.warn("Could not create object URL:", e);
+    return null;
+  }
 };
+

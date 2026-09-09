@@ -30,6 +30,7 @@ import {
 import { SEED_REGISTRATIONS } from '../../data/seedRegistrations';
 import { INDIAN_STATES, ART_CATEGORIES, ART_DISCIPLINES } from '../../data/indianStates';
 import { ArtistDetailModal } from './ArtistDetailModal';
+import { getAllStoredRegistrations, updateStoredRegistrationStatus } from '../../services/storageService';
 
 export const AdminDashboard = ({ onLogout, onBackToForm }) => {
   const [registrations, setRegistrations] = useState([]);
@@ -49,19 +50,13 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
   const [passError, setPassError] = useState('');
   const [passSuccess, setPassSuccess] = useState('');
 
-  // Load from localStorage + Seed data
-  const loadRegistrations = () => {
+  // Load from IndexedDB + localStorage + Seed data
+  const loadRegistrations = async () => {
     try {
-      const local = JSON.parse(localStorage.getItem('artist_registrations') || '[]');
-      const mergedMap = new Map();
-      local.forEach((item) => mergedMap.set(item.registrationId, item));
-      SEED_REGISTRATIONS.forEach((seed) => {
-        if (!mergedMap.has(seed.registrationId)) {
-          mergedMap.set(seed.registrationId, seed);
-        }
-      });
-      setRegistrations(Array.from(mergedMap.values()));
+      const allEntries = await getAllStoredRegistrations(SEED_REGISTRATIONS);
+      setRegistrations(allEntries);
     } catch (e) {
+      console.warn("Failed to load registrations:", e);
       setRegistrations(SEED_REGISTRATIONS);
     }
   };
@@ -71,7 +66,7 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
   }, []);
 
   // Update Status Handler
-  const handleUpdateStatus = (regId, newStatus) => {
+  const handleUpdateStatus = async (regId, newStatus) => {
     const updated = registrations.map((item) => {
       if (item.registrationId === regId) {
         return {
@@ -85,9 +80,7 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
     });
 
     setRegistrations(updated);
-    try {
-      localStorage.setItem('artist_registrations', JSON.stringify(updated));
-    } catch (e) {}
+    await updateStoredRegistrationStatus(regId, newStatus);
 
     if (selectedEntry && selectedEntry.registrationId === regId) {
       setSelectedEntry((prev) => ({
