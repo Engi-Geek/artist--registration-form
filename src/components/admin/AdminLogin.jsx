@@ -5,7 +5,6 @@ import {
   User,
   ArrowLeft,
   KeyRound,
-  Sparkles,
   AlertCircle,
   CheckCircle2,
   Eye,
@@ -91,14 +90,6 @@ export const AdminLogin = ({ onLoginSuccess, onBackToForm }) => {
       setConfirmPassword('');
       setMode('login');
     }, 600);
-  };
-
-  const handleFillDemo = () => {
-    setUsername('admin');
-    const activePassword = getStoredPassword();
-    setPassword(activePassword);
-    setError('');
-    setSuccessMsg('');
   };
 
   return (
@@ -282,18 +273,6 @@ export const AdminLogin = ({ onLoginSuccess, onBackToForm }) => {
                 </>
               )}
             </button>
-
-            <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '16px', textAlign: 'center' }}>
-              <button
-                type="button"
-                className="btn-demo"
-                style={{ width: '100%', justifyContent: 'center' }}
-                onClick={handleFillDemo}
-              >
-                <Sparkles size={16} />
-                <span>डेमो क्रेडेंशियल्स भरें (Auto Fill Credentials)</span>
-              </button>
-            </div>
           </form>
         ) : (
           /* Change Password Form */
