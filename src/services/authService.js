@@ -2,7 +2,7 @@
  * Authentication and Admin Service communicating with Laravel API & Sanctum
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://artist-registration-form.onrender.com/api/v1';
 
 export const getAuthToken = () => {
   return localStorage.getItem('admin_token');

@@ -11,7 +11,7 @@ const fileToPreviewUrl = (file, fallbackUrl) => {
   }
 };
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://artist-registration-form.onrender.com/api/v1';
 
 export const submitArtistRegistration = async (formDataState, onProgress = () => {}) => {
   onProgress(20);
