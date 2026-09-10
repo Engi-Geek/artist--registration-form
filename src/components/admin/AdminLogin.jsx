@@ -13,7 +13,7 @@ import {
   Check
 } from 'lucide-react';
 
-import { loginAdmin } from '../../services/authService';
+import { loginAdmin, updateAdminPassword } from '../../services/authService';
 
 export const AdminLogin = ({ onLoginSuccess, onBackToForm }) => {
   const [mode, setMode] = useState('login'); // 'login' | 'change_password'
@@ -55,19 +55,17 @@ export const AdminLogin = ({ onLoginSuccess, onBackToForm }) => {
     }
   };
 
-  const handleChangePasswordSubmit = (e) => {
+  const getStoredPassword = () => {
+    return localStorage.getItem('admin_custom_password') || 'admin@2026';
+  };
+
+  const handleChangePasswordSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setSuccessMsg('');
 
-    const activePassword = getStoredPassword();
-
     if (!currentPassword.trim()) {
       setError('वर्तमान पासवर्ड दर्ज करना अनिवार्य है। (Current password is required)');
-      return;
-    }
-    if (currentPassword !== activePassword) {
-      setError('वर्तमान पासवर्ड गलत है! (Current password is incorrect)');
       return;
     }
     if (!newPassword.trim() || newPassword.length < 6) {
@@ -80,16 +78,36 @@ export const AdminLogin = ({ onLoginSuccess, onBackToForm }) => {
     }
 
     setLoading(true);
-    setTimeout(() => {
-      localStorage.setItem('admin_custom_password', newPassword);
-      setLoading(false);
+    try {
+      await updateAdminPassword(currentPassword, newPassword);
       setSuccessMsg('✅ पासवर्ड सफलतापूर्वक बदल दिया गया है! अब आप नए पासवर्ड से लॉगिन कर सकते हैं।');
       setPassword(newPassword);
       setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
-      setMode('login');
-    }, 600);
+      setTimeout(() => {
+        setMode('login');
+        setSuccessMsg('');
+      }, 1500);
+    } catch (err) {
+      const activePassword = getStoredPassword();
+      if (currentPassword === activePassword) {
+        localStorage.setItem('admin_custom_password', newPassword);
+        setSuccessMsg('✅ पासवर्ड सफलतापूर्वक बदल दिया गया है!');
+        setPassword(newPassword);
+        setCurrentPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
+        setTimeout(() => {
+          setMode('login');
+          setSuccessMsg('');
+        }, 1500);
+      } else {
+        setError(err.message || 'वर्तमान पासवर्ड गलत है! (Current password is incorrect)');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
