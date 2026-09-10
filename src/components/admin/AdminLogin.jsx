@@ -315,7 +315,6 @@ export const AdminLogin = ({ onLoginSuccess, onBackToForm }) => {
                   onChange={(e) => setCurrentPassword(e.target.value)}
                 />
               </div>
-              <span className="helper-text">डिफ़ॉल्ट वर्तमान पासवर्ड: <strong>{getStoredPassword()}</strong></span>
             </div>
 
             <div className="form-group" style={{ marginBottom: '14px' }}>
