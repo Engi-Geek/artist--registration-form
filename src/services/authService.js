@@ -46,7 +46,7 @@ export const loginAdmin = async (username, password) => {
     const activePassword = localStorage.getItem('admin_custom_password') || 'admin@2026';
 
     // Fallback for standalone testing or if backend credentials match
-    if (username === 'admin' && (password === activePassword || password === 'admin@2026')) {
+    if (username === 'admin' && password === activePassword) {
       const demoUser = { username: 'admin', name: 'Chief Administrator', role: 'SUPER_ADMIN' };
       localStorage.setItem('admin_user', JSON.stringify(demoUser));
       return { success: true, token: 'demo_token', user: demoUser };
@@ -59,14 +59,14 @@ export const loginAdmin = async (username, password) => {
   } catch (err) {
     console.warn('API login failed, checking fallback credentials:', err);
     const activePassword = localStorage.getItem('admin_custom_password') || 'admin@2026';
-    if (username === 'admin' && (password === activePassword || password === 'admin@2026')) {
+    if (username === 'admin' && password === activePassword) {
       const demoUser = { username: 'admin', name: 'Chief Administrator', role: 'SUPER_ADMIN' };
       localStorage.setItem('admin_user', JSON.stringify(demoUser));
       return { success: true, token: 'demo_token', user: demoUser };
     }
     return {
       success: false,
-      message: 'सर्वर से संपर्क नहीं हो सका या पासवर्ड अमान्य है। (Unable to connect to server or invalid password)',
+      message: 'अमान्य पासवर्ड या सर्वर से संपर्क नहीं हो सका। (Invalid password or server connection failed)',
     };
   }
 };
