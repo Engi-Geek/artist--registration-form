@@ -1018,6 +1018,12 @@ h1, h2, h3, h4, h5, h6 {
   50% { transform: scale(1.04); }
 }
 
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 /* Print Friendly Styles */
 @media print {
   body {

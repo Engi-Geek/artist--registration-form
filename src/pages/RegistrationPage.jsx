@@ -7,6 +7,7 @@ import { Step2ArtDetails } from '../components/Step2ArtDetails';
 import { Step3DocumentsUpload } from '../components/Step3DocumentsUpload';
 import { Step4SocialLinks } from '../components/Step4SocialLinks';
 import { SuccessModal } from '../components/SuccessModal';
+import { UploadProgressModal } from '../components/UploadProgressModal';
 
 import {
   validateMobile,
@@ -67,6 +68,8 @@ export const RegistrationPage = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitProgress, setSubmitProgress] = useState(0);
+  const [uploadLoadedBytes, setUploadLoadedBytes] = useState(0);
+  const [uploadTotalBytes, setUploadTotalBytes] = useState(0);
   const [submissionResult, setSubmissionResult] = useState(null);
   const [showResetModal, setShowResetModal] = useState(false);
   const [formKey, setFormKey] = useState(1);
@@ -306,8 +309,15 @@ export const RegistrationPage = () => {
     }
 
     setIsSubmitting(true);
+    setSubmitProgress(10);
+    setUploadLoadedBytes(0);
+    setUploadTotalBytes(0);
     try {
-      const result = await submitArtistRegistration(formData, (p) => setSubmitProgress(p));
+      const result = await submitArtistRegistration(formData, (p, loaded, total) => {
+        setSubmitProgress(p);
+        if (loaded) setUploadLoadedBytes(loaded);
+        if (total) setUploadTotalBytes(total);
+      });
       setSubmissionResult(result);
     } catch (err) {
       alert("Submission error: " + err.message);
@@ -462,6 +472,15 @@ export const RegistrationPage = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Live Uploading Animation Modal */}
+      {isSubmitting && (
+        <UploadProgressModal
+          progress={submitProgress}
+          loadedBytes={uploadLoadedBytes}
+          totalBytes={uploadTotalBytes}
+        />
       )}
 
       {/* Success Modal */}
