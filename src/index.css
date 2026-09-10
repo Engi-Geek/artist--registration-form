@@ -1024,6 +1024,240 @@ h1, h2, h3, h4, h5, h6 {
   100% { background-position: 0% 50%; }
 }
 
+/* =========================================================
+   Comprehensive Mobile & Tablet Responsive Media Queries
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .app-container {
+    padding: 12px 10px 60px 10px;
+  }
+
+  /* Header Mobile */
+  .portal-header {
+    padding: 16px 14px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 16px;
+  }
+
+  .header-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .header-brand {
+    gap: 12px;
+  }
+
+  .brand-icon-wrapper {
+    width: 44px;
+    height: 44px;
+  }
+
+  .header-title-group h1 {
+    font-size: 1.2rem;
+  }
+
+  .header-title-group p {
+    font-size: 0.78rem;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+    margin-left: 0;
+  }
+
+  /* Stepper Mobile */
+  .stepper-card {
+    padding: 12px 8px;
+    margin-bottom: 16px;
+    border-radius: var(--radius-lg);
+  }
+
+  .stepper-track {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+
+  .step-item {
+    padding: 6px 2px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+  }
+
+  .step-number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+
+  .step-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .step-title-hi {
+    font-size: 0.68rem;
+    line-height: 1.1;
+  }
+
+  .step-title-en {
+    display: none;
+  }
+
+  /* Form Section Cards Mobile */
+  .form-section-card {
+    padding: 18px 14px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 16px;
+  }
+
+  .section-header {
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    gap: 10px;
+  }
+
+  .section-icon-badge {
+    width: 36px;
+    height: 36px;
+  }
+
+  .section-title-group h2 {
+    font-size: 1.05rem;
+  }
+
+  .section-title-group p {
+    font-size: 0.76rem;
+  }
+
+  /* Form Grids Mobile: Force 1 Column */
+  .form-grid.grid-2,
+  .form-grid.grid-3 {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .form-label {
+    flex-wrap: wrap;
+    gap: 3px;
+  }
+
+  .label-text-hi {
+    font-size: 0.85rem;
+  }
+
+  .label-text-en {
+    font-size: 0.72rem;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    font-size: 0.92rem;
+    padding: 10px 12px;
+  }
+
+  .input-with-icon-left {
+    padding-left: 38px;
+  }
+
+  .input-with-icon-right {
+    padding-right: 38px;
+  }
+
+  /* Upload Cards Mobile */
+  .upload-card-wrapper {
+    padding: 18px 12px;
+  }
+
+  .upload-icon-circle {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 8px;
+  }
+
+  .file-preview-box {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .file-thumbnail {
+    width: 46px;
+    height: 46px;
+  }
+
+  .video-player-preview {
+    max-height: 180px;
+  }
+
+  /* Action Buttons Mobile: Full-width stacked */
+  .form-actions-footer {
+    flex-direction: column-reverse;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .form-actions-footer .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 18px;
+    font-size: 0.92rem;
+  }
+
+  /* Modals Mobile */
+  .modal-content {
+    max-width: 95%;
+    width: 95%;
+    border-radius: var(--radius-lg);
+    max-height: 94vh;
+  }
+
+  .modal-header {
+    padding: 16px 14px;
+  }
+
+  .modal-body {
+    padding: 16px 14px;
+  }
+
+  .registration-card-hero {
+    padding: 16px 14px;
+    margin-bottom: 16px;
+  }
+
+  .reg-id-box {
+    font-size: 1.05rem;
+    padding: 6px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-title-group h1 {
+    font-size: 1.05rem;
+  }
+
+  .brand-icon-wrapper {
+    width: 38px;
+    height: 38px;
+  }
+
+  .step-number {
+    width: 26px;
+    height: 26px;
+    font-size: 0.7rem;
+  }
+
+  .step-title-hi {
+    font-size: 0.62rem;
+  }
+}
+
 /* Print Friendly Styles */
 @media print {
   body {

@@ -195,6 +195,14 @@ export const submitArtistRegistration = (formDataState, onProgress = () => {}) =
       }
     };
 
+    xhr.timeout = 180000; // 3 minutes timeout for heavy mobile video uploads
+
+    xhr.ontimeout = async () => {
+      console.warn("XHR upload timed out on mobile, generating fallback receipt");
+      const fallback = await generateClientFallbackReceipt(formDataState, onProgress);
+      resolve(fallback);
+    };
+
     xhr.onerror = async () => {
       console.warn("XHR upload network failed, using client fallback");
       const fallback = await generateClientFallbackReceipt(formDataState, onProgress);
