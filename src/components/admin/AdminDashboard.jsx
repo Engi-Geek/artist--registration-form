@@ -43,6 +43,7 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
   const [selectedEntry, setSelectedEntry] = useState(null);
   const [viewMode, setViewMode] = useState('table'); // 'table' | 'gallery'
   const [isLoading, setIsLoading] = useState(false);
+  const [sortByDate, setSortByDate] = useState('NEWEST'); // 'NEWEST' (नवीनतम पहले) | 'OLDEST' (सबसे पुराना पहले)
 
   // Change Password state inside Dashboard
   const [showChangePassModal, setShowChangePassModal] = useState(false);
@@ -117,21 +118,27 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
     await updateStoredRegistrationStatus(regId, newStatus);
   };
 
-  // Filter logic
-  const filteredList = registrations.filter((item) => {
-    const nameMatch =
-      item.applicant?.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.applicant?.mobile?.includes(searchTerm) ||
-      item.registrationId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.applicant?.district?.toLowerCase().includes(searchTerm.toLowerCase());
+  // Filter and sort logic
+  const filteredList = registrations
+    .filter((item) => {
+      const nameMatch =
+        item.applicant?.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.applicant?.mobile?.includes(searchTerm) ||
+        item.registrationId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.applicant?.district?.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const catMatch = categoryFilter === 'ALL' || item.artDetails?.category === categoryFilter;
-    const discMatch = disciplineFilter === 'ALL' || item.artDetails?.discipline === disciplineFilter;
-    const stateMatch = stateFilter === 'ALL' || item.applicant?.state === stateFilter;
-    const statusMatch = statusFilter === 'ALL' || item.status === statusFilter;
+      const catMatch = categoryFilter === 'ALL' || item.artDetails?.category === categoryFilter;
+      const discMatch = disciplineFilter === 'ALL' || item.artDetails?.discipline === disciplineFilter;
+      const stateMatch = stateFilter === 'ALL' || item.applicant?.state === stateFilter;
+      const statusMatch = statusFilter === 'ALL' || item.status === statusFilter;
 
-    return nameMatch && catMatch && discMatch && stateMatch && statusMatch;
-  });
+      return nameMatch && catMatch && discMatch && stateMatch && statusMatch;
+    })
+    .sort((a, b) => {
+      const timeA = new Date(a.submissionTime || a.created_at || a.submissionDate || 0).getTime();
+      const timeB = new Date(b.submissionTime || b.created_at || b.submissionDate || 0).getTime();
+      return sortByDate === 'NEWEST' ? timeB - timeA : timeA - timeB;
+    });
 
   // Calculate category stats
   const totalCount = registrations.length;
@@ -229,13 +236,6 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
     }, 1500);
   };
 
-  // Reload and overwrite localStorage with clean seed data
-  const handleReloadAllSeedData = () => {
-    localStorage.setItem('artist_registrations', JSON.stringify(SEED_REGISTRATIONS));
-    setRegistrations(SEED_REGISTRATIONS);
-    alert('✅ सभी डमी कलाकार, वीडियो और फोटो डेटा सफलतापूर्वक लोड कर दिए गए हैं!');
-  };
-
   return (
     <div className="app-container" style={{ maxWidth: '1240px' }}>
       {/* Admin Header */}
@@ -261,33 +261,12 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
             <div className="header-title-group">
               <h1 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 व्यवस्थापक डैशबोर्ड (Admin Portal)
-                <span
-                  className="portal-badge"
-                  style={{
-                    background: 'var(--secondary-light)',
-                    color: 'var(--secondary)',
-                    borderColor: 'rgba(99, 102, 241, 0.3)'
-                  }}
-                >
-                  Admin v2.0
-                </span>
               </h1>
               <p>कलाकार पंजीकरण प्रविष्टियों, फोटो एवं प्रदर्शन वीडियो का सत्यापन एवं प्रबंधन पोर्टल</p>
             </div>
           </div>
 
           <div className="header-actions">
-            <button
-              type="button"
-              className="btn-demo"
-              style={{ background: 'var(--primary-light)', color: 'var(--primary)', borderColor: 'var(--primary)' }}
-              onClick={handleReloadAllSeedData}
-              title="सभी 10+ डमी कलाकार, वीडियो और फोटो लोड करें"
-            >
-              <Sparkles size={15} />
-              <span>डमी डेटा रीलोड (Seed Data)</span>
-            </button>
-
             <button
               type="button"
               className="btn btn-secondary"
@@ -518,6 +497,22 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
             </select>
           </div>
 
+          {/* State Filter */}
+          <div>
+            <select
+              className="form-select"
+              value={stateFilter}
+              onChange={(e) => setStateFilter(e.target.value)}
+            >
+              <option value="ALL">सभी राज्य (All States)</option>
+              {INDIAN_STATES.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+          </div>
+
           {/* Status Filter */}
           <div>
             <select
@@ -529,6 +524,20 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
               <option value="APPROVED">स्वीकृत (Approved)</option>
               <option value="UNDER_REVIEW">लंबित (Under Review)</option>
               <option value="REJECTED">अस्वीकृत (Rejected)</option>
+            </select>
+          </div>
+
+          {/* Date Sort Filter */}
+          <div>
+            <select
+              className="form-select"
+              value={sortByDate}
+              onChange={(e) => setSortByDate(e.target.value)}
+              title="पंजीकरण तिथि क्रम से सॉर्ट करें"
+              style={{ fontWeight: 600 }}
+            >
+              <option value="NEWEST">📅 नवीनतम पहले (Newest First)</option>
+              <option value="OLDEST">📅 सबसे पुराना पहले (Oldest First)</option>
             </select>
           </div>
 
@@ -607,7 +616,7 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
               <thead>
                 <tr style={{ background: 'var(--bg-card-subtle)', borderBottom: '1.5px solid var(--border-color)', color: 'var(--text-muted)' }}>
                   <th style={{ padding: '12px 16px' }}>फोटो</th>
-                  <th style={{ padding: '12px 16px' }}>Reg ID</th>
+                  <th style={{ padding: '12px 16px' }}>Reg ID / पंजीकरण तिथि</th>
                   <th style={{ padding: '12px 16px' }}>कलाकार का नाम</th>
                   <th style={{ padding: '12px 16px' }}>श्रेणी व विधा</th>
                   <th style={{ padding: '12px 16px' }}>मोबाइल</th>
@@ -649,8 +658,14 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
                             }}
                           />
                         </td>
-                        <td style={{ padding: '14px 16px', fontFamily: 'monospace', fontWeight: 700, color: 'var(--primary)' }}>
-                          {entry.registrationId}
+                        <td style={{ padding: '14px 16px' }}>
+                          <div style={{ fontFamily: 'monospace', fontWeight: 700, color: 'var(--primary)' }}>
+                            {entry.registrationId}
+                          </div>
+                          <div style={{ fontSize: '0.73rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '2px' }}>
+                            <Clock size={11} />
+                            {entry.submissionTime ? new Date(entry.submissionTime).toLocaleDateString('hi-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'N/A'}
+                          </div>
                         </td>
                         <td style={{ padding: '14px 16px' }}>
                           <div style={{ fontWeight: 700 }}>{entry.applicant?.fullName}</div>
@@ -806,9 +821,15 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
                   </div>
 
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border-color)', paddingTop: '12px' }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--primary)', fontFamily: 'monospace' }}>
-                      {entry.registrationId}
-                    </span>
+                    <div>
+                      <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--primary)', fontFamily: 'monospace' }}>
+                        {entry.registrationId}
+                      </div>
+                      <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '3px', marginTop: '2px' }}>
+                        <Clock size={10} />
+                        {entry.submissionTime ? new Date(entry.submissionTime).toLocaleDateString('hi-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : 'N/A'}
+                      </div>
+                    </div>
 
                     <button
                       type="button"
