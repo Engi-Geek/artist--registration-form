@@ -14,6 +14,8 @@ import {
   Check
 } from 'lucide-react';
 
+import { loginAdmin } from '../../services/authService';
+
 export const AdminLogin = ({ onLoginSuccess, onBackToForm }) => {
   const [mode, setMode] = useState('login'); // 'login' | 'change_password'
   const [username, setUsername] = useState('');
@@ -29,12 +31,7 @@ export const AdminLogin = ({ onLoginSuccess, onBackToForm }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showNewPassword, setShowNewPassword] = useState(false);
 
-  // Get active password (defaults to admin@2026 if not set)
-  const getStoredPassword = () => {
-    return localStorage.getItem('admin_custom_password') || 'admin@2026';
-  };
-
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setSuccessMsg('');
@@ -45,15 +42,18 @@ export const AdminLogin = ({ onLoginSuccess, onBackToForm }) => {
     }
 
     setLoading(true);
-    setTimeout(() => {
-      const activePassword = getStoredPassword();
-      if (username.trim() === 'admin' && password === activePassword) {
+    try {
+      const result = await loginAdmin(username.trim(), password);
+      if (result.success) {
         onLoginSuccess();
       } else {
-        setError(`अमान्य क्रेडेंशियल्स! (Invalid credentials). ${activePassword === 'admin@2026' ? 'डेमो लॉगिन के लिए "डेमो एडमिन भरें" पर क्लिक करें।' : 'कृपया नया सेट किया गया पासवर्ड दर्ज करें।'}`);
-        setLoading(false);
+        setError(result.message || 'अमान्य क्रेडेंशियल्स! (Invalid credentials).');
       }
-    }, 500);
+    } catch (err) {
+      setError('लॉगिन करने में त्रुटि (Login error).');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChangePasswordSubmit = (e) => {

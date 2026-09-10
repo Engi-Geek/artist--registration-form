@@ -404,6 +404,7 @@ export const ArtistDetailModal = ({ entry, onClose, onUpdateStatus }) => {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 <div><strong>पूरा नाम:</strong> {applicant?.fullName}</div>
                 <div><strong>पिता/पति का नाम:</strong> {applicant?.fatherHusbandName}</div>
+                <div><strong>आधार नंबर:</strong> {applicant?.aadhaarNumber || 'N/A'}</div>
                 <div><strong>जन्म तिथि:</strong> {applicant?.dob}</div>
                 <div><strong>लिंग:</strong> {applicant?.gender}</div>
                 <div><strong>मोबाइल:</strong> +91 {applicant?.mobile}</div>

@@ -185,6 +185,7 @@ export const Step4SocialLinks = ({ formData, onChange, errors }) => {
             </div>
             <div><strong>नाम:</strong> {formData.fullName || "—"}</div>
             <div><strong>पिता/पति का नाम:</strong> {formData.fatherHusbandName || "—"}</div>
+            <div><strong>आधार नंबर:</strong> {formData.aadhaarNumber || "—"}</div>
             <div><strong>जन्म तिथि:</strong> {formData.dob || "—"} {age ? `(${age} वर्ष)` : ""}</div>
             <div><strong>लिंग:</strong> {formData.gender || "—"}</div>
             <div><strong>मोबाइल:</strong> +91 {formData.mobile || "—"}</div>

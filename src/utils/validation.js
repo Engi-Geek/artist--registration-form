@@ -22,6 +22,15 @@ export const validatePincode = (pincode) => {
   return null;
 };
 
+// Aadhaar Number: Exactly 12 digits (handles formatted spaces like 1234 5678 9012 or raw 12 digits)
+export const validateAadhaarNumber = (aadhaar) => {
+  if (!aadhaar) return "आधार कार्ड संख्या अनिवार्य है / Aadhaar Number is required";
+  const cleaned = aadhaar.toString().replace(/\s+/g, "").trim();
+  if (!/^\d+$/.test(cleaned)) return "आधार में केवल 12 अंक होने चाहिए / Only digits allowed";
+  if (cleaned.length !== 12) return "आधार कार्ड ठीक 12 अंकों का होना चाहिए / Must be exactly 12 digits";
+  return null;
+};
+
 // Experience: Numeric (0-70 years)
 export const validateExperience = (exp) => {
   if (exp === "" || exp === null || exp === undefined) {

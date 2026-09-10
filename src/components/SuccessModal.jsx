@@ -89,6 +89,7 @@ export const SuccessModal = ({ submissionResult, onClose, onRegisterNew }) => {
           <div style={{ border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', padding: '16px', fontSize: '0.85rem', marginBottom: '20px' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px' }}>
               <div><strong>मोबाइल:</strong> +91 {receiptData?.applicant?.mobile}</div>
+              <div><strong>आधार नंबर:</strong> {receiptData?.applicant?.aadhaarNumber || 'N/A'}</div>
               <div><strong>पिता/पति का नाम:</strong> {receiptData?.applicant?.fatherHusbandName}</div>
               <div><strong>कला अनुभव:</strong> {receiptData?.artDetails?.experience}</div>
               <div><strong>पिनकोड:</strong> {receiptData?.applicant?.pincode}</div>

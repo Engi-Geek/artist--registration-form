@@ -31,6 +31,7 @@ import { SEED_REGISTRATIONS } from '../../data/seedRegistrations';
 import { INDIAN_STATES, ART_CATEGORIES, ART_DISCIPLINES } from '../../data/indianStates';
 import { ArtistDetailModal } from './ArtistDetailModal';
 import { getAllStoredRegistrations, updateStoredRegistrationStatus } from '../../services/storageService';
+import { fetchAdminRegistrations, updateApiRegistrationStatus, logoutAdmin } from '../../services/authService';
 
 export const AdminDashboard = ({ onLogout, onBackToForm }) => {
   const [registrations, setRegistrations] = useState([]);
@@ -41,6 +42,7 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [selectedEntry, setSelectedEntry] = useState(null);
   const [viewMode, setViewMode] = useState('table'); // 'table' | 'gallery'
+  const [isLoading, setIsLoading] = useState(false);
 
   // Change Password state inside Dashboard
   const [showChangePassModal, setShowChangePassModal] = useState(false);
@@ -50,14 +52,28 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
   const [passError, setPassError] = useState('');
   const [passSuccess, setPassSuccess] = useState('');
 
-  // Load from IndexedDB + localStorage + Seed data
+  // Load from Laravel API with IndexedDB + localStorage + Seed data fallback
   const loadRegistrations = async () => {
+    setIsLoading(true);
+    try {
+      const apiData = await fetchAdminRegistrations();
+      if (apiData && Array.isArray(apiData) && apiData.length > 0) {
+        setRegistrations(apiData);
+        setIsLoading(false);
+        return;
+      }
+    } catch (err) {
+      console.warn("API load error, falling back to local storage:", err);
+    }
+
     try {
       const allEntries = await getAllStoredRegistrations(SEED_REGISTRATIONS);
       setRegistrations(allEntries);
     } catch (e) {
       console.warn("Failed to load registrations:", e);
       setRegistrations(SEED_REGISTRATIONS);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -67,6 +83,14 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
 
   // Update Status Handler
   const handleUpdateStatus = async (regId, newStatus) => {
+    // 1. Sync with Laravel Backend
+    try {
+      await updateApiRegistrationStatus(regId, newStatus);
+    } catch (e) {
+      console.warn("API update status error:", e);
+    }
+
+    // 2. Sync with local storage & state
     const updated = registrations.map((item) => {
       if (item.registrationId === regId) {
         return {
@@ -80,14 +104,17 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
     });
 
     setRegistrations(updated);
-    await updateStoredRegistrationStatus(regId, newStatus);
 
     if (selectedEntry && selectedEntry.registrationId === regId) {
       setSelectedEntry((prev) => ({
         ...prev,
-        status: newStatus
+        status: newStatus,
+        statusTextHi: newStatus === 'APPROVED' ? 'स्वीकृत (Approved)' : 'अस्वीकृत (Rejected)',
+        statusTextEn: newStatus === 'APPROVED' ? 'Verified & Approved' : 'Application Rejected'
       }));
     }
+
+    await updateStoredRegistrationStatus(regId, newStatus);
   };
 
   // Filter logic

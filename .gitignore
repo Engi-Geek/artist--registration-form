@@ -7,10 +7,23 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node & Vite
 node_modules
 dist
 dist-ssr
 *.local
+
+# Laravel Backend
+backend/vendor/
+backend/.env
+backend/.env.backup
+backend/.env.production
+backend/public/storage
+backend/storage/*.key
+backend/storage/app/public/uploads/*
+!backend/storage/app/public/uploads/.gitkeep
+backend/database/*.sqlite
+backend/database/*.sqlite-journal
 
 # Editor directories and files
 .vscode/*

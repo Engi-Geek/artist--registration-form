@@ -16,6 +16,7 @@ import {
   validateDOB,
   validateArtDescription,
   validateNameMatching,
+  validateAadhaarNumber,
   validateUrl
 } from '../utils/validation';
 
@@ -39,6 +40,7 @@ const INITIAL_STATE = {
   artDescription: '',
   experience: '',
 
+  aadhaarNumber: '',
   aadhaarName: '',
   passbookName: '',
   files: {
@@ -207,6 +209,9 @@ export const RegistrationPage = () => {
   // Validate Step 3 (Documents & Strict Name Match)
   const validateStep3 = () => {
     const newErrors = {};
+    const aadhaarErr = validateAadhaarNumber(formData.aadhaarNumber);
+    if (aadhaarErr) newErrors.aadhaarNumber = aadhaarErr;
+
     if (!formData.aadhaarName.trim()) newErrors.aadhaarName = "आधार कार्ड का नाम अनिवार्य है / Aadhaar Name is required";
     if (!formData.passbookName.trim()) newErrors.passbookName = "पासबुक का नाम अनिवार्य है / Passbook Name is required";
 

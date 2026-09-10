@@ -44,12 +44,43 @@ export const Step3DocumentsUpload = ({
           महत्वपूर्ण सूचना: आवेदक का नाम, आधार कार्ड का नाम और बैंक पासबुक का नाम <strong>शत-प्रतिशत एक समान</strong> होना अनिवार्य है, अन्यथा पंजीकरण स्वतः निरस्त हो जाएगा।
         </p>
 
-        <div className="form-grid grid-2">
+        <div className="form-grid grid-2" style={{ marginBottom: '14px' }}>
+          {/* Aadhaar Number */}
+          <div className="form-group">
+            <label className="form-label" htmlFor="aadhaarNumber">
+              <span>
+                <span className="label-text-hi">आधार कार्ड संख्या</span>
+                <span className="label-text-en">/ Aadhaar Number (12 Digits)</span>
+                <span className="required-star">*</span>
+              </span>
+            </label>
+            <input
+              id="aadhaarNumber"
+              type="text"
+              className={`form-input ${errors.aadhaarNumber ? 'is-invalid' : ''}`}
+              placeholder="e.g. 1234 5678 9012"
+              maxLength={14}
+              value={formData.aadhaarNumber || ''}
+              onChange={(e) => {
+                const raw = e.target.value.replace(/\D/g, '').slice(0, 12);
+                const formatted = raw.replace(/(\d{4})(?=\d)/g, '$1 ');
+                onChange('aadhaarNumber', formatted);
+              }}
+            />
+            {errors.aadhaarNumber && (
+              <div className="error-message">
+                <AlertCircle size={14} />
+                <span>{errors.aadhaarNumber}</span>
+              </div>
+            )}
+          </div>
+
+          {/* Aadhaar Name */}
           <div className="form-group">
             <label className="form-label" htmlFor="aadhaarName">
               <span>
-                <span className="label-text-hi">आधार कार्ड पर अंकित नाम</span>
-                <span className="label-text-en">/ Name as per Aadhaar</span>
+                <span className="label-text-hi">आधार कार्ड पर नाम</span>
+                <span className="label-text-en">/ Name as on Aadhaar</span>
                 <span className="required-star">*</span>
               </span>
             </label>
@@ -68,12 +99,15 @@ export const Step3DocumentsUpload = ({
               </div>
             )}
           </div>
+        </div>
 
+        {/* Bank Passbook Name in 2-Column Row with applicant comparison note */}
+        <div className="form-grid grid-2" style={{ marginBottom: '14px' }}>
           <div className="form-group">
             <label className="form-label" htmlFor="passbookName">
               <span>
-                <span className="label-text-hi">बैंक पासबुक में खाताधारक का नाम</span>
-                <span className="label-text-en">/ Name as per Passbook</span>
+                <span className="label-text-hi">बैंक पासबुक में नाम</span>
+                <span className="label-text-en">/ Name as on Passbook</span>
                 <span className="required-star">*</span>
               </span>
             </label>
@@ -91,6 +125,32 @@ export const Step3DocumentsUpload = ({
                 <span>{errors.passbookName}</span>
               </div>
             )}
+          </div>
+
+          {/* Applicant Name Reference Card */}
+          <div className="form-group">
+            <label className="form-label">
+              <span>
+                <span className="label-text-hi">मूल आवेदक का नाम (संदर्भ)</span>
+                <span className="label-text-en">/ Primary Applicant Name (Ref)</span>
+              </span>
+            </label>
+            <div
+              style={{
+                height: '42px',
+                background: '#ffffff',
+                border: '1.5px dashed var(--border-color)',
+                borderRadius: 'var(--radius-md)',
+                padding: '0 14px',
+                display: 'flex',
+                alignItems: 'center',
+                fontSize: '0.9rem',
+                fontWeight: 600,
+                color: formData.fullName ? 'var(--text-main)' : 'var(--text-muted)'
+              }}
+            >
+              {formData.fullName || 'चरण 1 में भरा गया नाम (Filled in Step 1)'}
+            </div>
           </div>
         </div>
 
