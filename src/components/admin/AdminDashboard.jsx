@@ -31,7 +31,7 @@ import { SEED_REGISTRATIONS } from '../../data/seedRegistrations';
 import { INDIAN_STATES, ART_CATEGORIES, ART_DISCIPLINES } from '../../data/indianStates';
 import { ArtistDetailModal } from './ArtistDetailModal';
 import { getAllStoredRegistrations, updateStoredRegistrationStatus } from '../../services/storageService';
-import { fetchAdminRegistrations, updateApiRegistrationStatus, logoutAdmin } from '../../services/authService';
+import { fetchAdminRegistrations, updateApiRegistrationStatus, logoutAdmin, updateAdminPassword } from '../../services/authService';
 
 export const AdminDashboard = ({ onLogout, onBackToForm }) => {
   const [registrations, setRegistrations] = useState([]);
@@ -200,19 +200,13 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
   };
 
   // Handle Change Password inside Dashboard
-  const handleChangePassInDashboard = (e) => {
+  const handleChangePassInDashboard = async (e) => {
     e.preventDefault();
     setPassError('');
     setPassSuccess('');
 
-    const storedPass = localStorage.getItem('admin_custom_password') || 'admin@2026';
-
     if (!currPass.trim()) {
       setPassError('वर्तमान पासवर्ड अनिवार्य है।');
-      return;
-    }
-    if (currPass !== storedPass) {
-      setPassError('वर्तमान पासवर्ड गलत है!');
       return;
     }
     if (!newPass.trim() || newPass.length < 6) {
@@ -224,16 +218,20 @@ export const AdminDashboard = ({ onLogout, onBackToForm }) => {
       return;
     }
 
-    localStorage.setItem('admin_custom_password', newPass);
-    setPassSuccess('✅ पासवर्ड सफलतापूर्वक अपडेट कर दिया गया है!');
-    setTimeout(() => {
-      setShowChangePassModal(false);
-      setCurrPass('');
-      setNewPass('');
-      setConfirmPass('');
-      setPassSuccess('');
-      setPassError('');
-    }, 1500);
+    try {
+      await updateAdminPassword(currPass, newPass);
+      setPassSuccess('✅ पासवर्ड सफलतापूर्वक डेटाबेस में अपडेट कर दिया गया है!');
+      setTimeout(() => {
+        setShowChangePassModal(false);
+        setCurrPass('');
+        setNewPass('');
+        setConfirmPass('');
+        setPassSuccess('');
+        setPassError('');
+      }, 1500);
+    } catch (err) {
+      setPassError(err.message || 'वर्तमान पासवर्ड गलत है!');
+    }
   };
 
   return (

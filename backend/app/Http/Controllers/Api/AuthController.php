@@ -85,4 +85,38 @@ class AuthController extends Controller
             'user' => $request->user(),
         ]);
     }
+
+    /**
+     * Change Admin Password in Database
+     */
+    public function changePassword(Request $request): JsonResponse
+    {
+        $request->validate([
+            'current_password' => ['required', 'string'],
+            'new_password' => ['required', 'string', 'min:6'],
+        ]);
+
+        $user = $request->user();
+
+        if (!$user) {
+            $user = User::where('role', 'SUPER_ADMIN')->orWhere('username', 'admin')->first();
+        }
+
+        if (!$user || !Hash::check($request->current_password, $user->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'वर्तमान पासवर्ड गलत है! (Current password is incorrect).',
+            ], 422);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'पासवर्ड सफलतापूर्वक बदल दिया गया है (Password updated successfully in database).',
+        ]);
+    }
 }
+

@@ -90,6 +90,43 @@ export const logoutAdmin = async () => {
 };
 
 /**
+ * Change Admin Password in Laravel Backend & LocalStorage
+ */
+export const updateAdminPassword = async (currentPassword, newPassword) => {
+  const token = getAuthToken();
+  if (token && token !== 'demo_token') {
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/change-password`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          current_password: currentPassword,
+          new_password: newPassword,
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'पासवर्ड बदलने में त्रुटि');
+      }
+      localStorage.setItem('admin_custom_password', newPassword);
+      return { success: true, message: data.message };
+    } catch (err) {
+      console.warn('API change password failed, updating local:', err);
+      throw err;
+    }
+  }
+
+  // Local fallback
+  localStorage.setItem('admin_custom_password', newPassword);
+  return { success: true, message: 'पासवर्ड अपडेट कर दिया गया है' };
+};
+
+/**
  * Fetch Analytics Stats from Laravel
  */
 export const fetchAdminAnalytics = async () => {
